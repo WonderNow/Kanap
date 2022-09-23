@@ -20,9 +20,8 @@ console.log(id);
  * @param pid - Identifiant du produit (pid = product id) 
  * @return data - Contient les données du produit concerné 
  */
- async function Fetch_ID(pid)
- {
-
+export default async function Fetch_ID(pid)
+{ 
     if (pid !== undefined) {
 
         // Appelle l'API avec l'ID présent dans l'URL 
@@ -50,7 +49,6 @@ console.log(id);
                 console.log("Une erreur est survenue : " + err);
             });
     }
-
 };
 
 
