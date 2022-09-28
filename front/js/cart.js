@@ -1,5 +1,6 @@
-﻿import Fetch_ID from "./product";
+﻿import Fetch_ID from "./product.js";
 
+let produitLocalStorage;
 /**
  * Affiche les informations des produits présent dans le panier
  * @return ajoute les élément un par un dans le DOM 
