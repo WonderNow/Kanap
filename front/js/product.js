@@ -17,15 +17,15 @@ console.log(id);
 
 /**
  * Appelle l'API pour récupérer le produit associé a l'id présent dans l'url concernée
- * @param pid - Identifiant du produit (pid = product id) 
+ * @param productID - Identifiant du produit
  * @return data - Contient les données du produit concerné 
  */
-export default async function Fetch_ID(pid)
+export default async function fetchID(productID)
 { 
-    if (pid !== undefined) {
+    if (productID !== undefined) {
 
         // Appelle l'API avec l'ID présent dans l'URL 
-        return await fetch('http://localhost:3000/api/products/' + pid)
+        return await fetch('http://localhost:3000/api/products/' + productID)
             // Convertit la réponse au format json 
             .then(function (res) {
                 if (res.ok) {
@@ -54,11 +54,11 @@ export default async function Fetch_ID(pid)
 
 
 /**
- * Appelle de la function Fetch_ID()
+ * Appelle de la function fetchID()
  * Récupère le résultat de la requête dans une variable 
  * Enfin, appelle la function produit avec l'article récupéré 
  */
- Fetch_ID(id)
+ fetchID(id)
  .then((data) => { produit(data) })
  .catch((err) => console.log(err));
 
