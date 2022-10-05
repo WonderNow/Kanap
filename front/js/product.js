@@ -2,13 +2,13 @@ let data;
 let id;
 
 
-// Récupère l'id présent dans l'URL concernée
+// Récupère l'ID présent dans l'URL concernée
 let url = new URL(window.location.href);
 console.log(url);
 let search_params = new URLSearchParams(url.search);
-// Vérifie si le paramètre existe dans l'url → si oui, @return true;
+// Vérifie si le paramètre existe dans l'URL → si oui, @return true;
 if (search_params.has('id')) {
-    // Récupère l'id dans les paramètres de l'url 
+    // Récupère l'ID dans les paramètres de l'URL 
     id = search_params.get('id');
 }
 
@@ -16,7 +16,7 @@ console.log(id);
 
 
 /**
- * Appelle l'API pour récupérer le produit associé a l'id présent dans l'url concernée
+ * Appelle l'API pour récupérer le produit associé a l'ID présent dans l'URL concernée
  * @param productID - Identifiant du produit
  * @return data - Contient les données du produit concerné 
  */
@@ -78,7 +78,7 @@ export default async function fetchID(productID)
         item__img[0].innerHTML = "<img src=" + data.imageUrl + " alt=" + data.altTxt + "></img>";
 
         /**
-         * Récupère la balise qui contient l'id 'title' et ajoute le nom de l'data
+         * Récupère la balise qui contient l'ID 'title' et ajoute le nom de l'data
          */
         const title = document.getElementById('title');
         title.innerText = data.name;
@@ -97,7 +97,7 @@ export default async function fetchID(productID)
 
         /**
          * Récupère les couleurs dans le tableau des couleurs du produit 
-         * Récupère la balise qui contient l'id colors et ajoute les couleurs
+         * Récupère la balise qui contient l'ID colors et ajoute les couleurs
          */
         for (let colors of data.colors) {
             let productColors = document.createElement("option");

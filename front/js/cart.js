@@ -13,12 +13,12 @@ async function addCard() {
         // ALORS on récupère les produits et leurs informations une par une, dans une variable nommée key
         for (let key in produitLocalStorage) {
 
-            // Récupère l'id du produit dans local Storage 
+            // Récupère l'ID du produit dans local Storage 
             let pi = produitLocalStorage[Number(key)]._id;
 
             console.log(await fetchID(productID));
 
-            // Récupère les information du produit en passent l'id du produit en paramètre 
+            // Récupère les information du produit en passent l'ID du produit en paramètre 
             await fetchID(productID)
 
                 .then(function (article) {
