@@ -1,9 +1,12 @@
-﻿import fetchID from "./product.js";
+﻿// Import de la fonction fetchID préalablement exportée dans le fichier "product.js"
+import fetchID from "./product.js";
 
+// Déclaration de la variable produitLocalStorage afin de pouvoir l'utiliser dans les différentes fonctions ci-dessous
 let produitLocalStorage;
 
+
 // La fonction async ci-dessous permet d'afficher les informations des produits dans le panier
-// Le @return permet d'ajouter les élément un par un dans le DOM
+// Le @return permet d'ajouter les éléments un par un dans le DOM
 async function addCard() {
     console.log(produitLocalStorage);
 
@@ -82,5 +85,23 @@ async function addCard() {
     }
 
 }
-// Appelle de la fonction addCard()
+// Appel de la fonction addCard()
 addCard();
+
+
+//localStorage.setItem("clé", "valeur")
+//localStorage.getItem("clé")
+//localStorage.clear()
+
+/*
+Les éléments "title" aka "name", "value" aka "colors", "price" & "quantity"
+Doivent être ajoutés au localStorage lors du clic sur le bouton "addToCart"
+*/
+
+async function saveToLocalStorage() {
+    addToCart.onclick = () =>{
+        localStorage.setItem("title",title.value);
+    }
+}
+
+

@@ -16,6 +16,7 @@ console.log(id);
 
 
 /**
+ * Création de la fonction async fetchID
  * Appelle l'API pour récupérer le produit associé a l'ID présent dans l'URL concernée
  * @param productID - Identifiant du produit
  * @return data - Contient les données du produit concerné 
@@ -73,32 +74,24 @@ export default async function fetchID(productID)
   async function produit(data) {
     console.log(data);
     if (data !== undefined) {
-        /* Récupère la balise avec la classe 'item_img' et lui ajoute l'image du produit */
+        // Récupère la balise avec la classe 'item_img' et lui ajoute l'image du produit */
         const item__img = document.getElementsByClassName("item__img");
         item__img[0].innerHTML = "<img src=" + data.imageUrl + " alt=" + data.altTxt + "></img>";
 
-        /**
-         * Récupère la balise qui contient l'ID 'title' et ajoute le nom de l'data
-         */
+        //Récupère la balise qui contient l'ID 'title' et ajoute le nom de l'data
         const title = document.getElementById('title');
         title.innerText = data.name;
 
-        /**
-         * Récupère la balise qui contient la classe 'price' et ajoute le prix de l'article 
-         */
+        //Récupère la balise qui contient la classe 'price' et ajoute le prix de l'article 
         const price = document.getElementById('price');
         price.innerText = data.price;
 
-        /**
-         * Récupère la balise qui contient l'id 'description' et ajoute la description de l'article 
-         */
+        // Récupère la balise qui contient l'id 'description' et ajoute la description de l'article 
         const description = document.getElementById('description');
         description.innerText = data.description;
 
-        /**
-         * Récupère les couleurs dans le tableau des couleurs du produit 
-         * Récupère la balise qui contient l'ID colors et ajoute les couleurs
-         */
+        // Récupère les couleurs dans le tableau des couleurs du produit 
+        // Récupère la balise qui contient l'ID colors et ajoute les couleurs
         for (let colors of data.colors) {
             let productColors = document.createElement("option");
             document.querySelector("#colors").appendChild(productColors);
