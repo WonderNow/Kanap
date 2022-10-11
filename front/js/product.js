@@ -117,5 +117,8 @@ if (buttonAddToCart != null) {
         if (color == null || color === "" && quantity > 0) {
             alert("Oups... 🥺\n\nTu n'as pas sélectionné de couleur pour ton canapé.\n\nVa vite arranger ça ! 😉")
         }
+        if (color != null && color != "" && quantity > 0) {
+            alert("Félicitations ! 🎉\n\nCet article a bien été ajouté à ton panier ! 😉")
+        }
     })
 }
