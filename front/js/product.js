@@ -100,3 +100,22 @@ export default async function fetchID(productID)
         }
     }
 }
+
+
+// LOCALSTORAGE BRO
+const buttonAddToCart = document.querySelector("#addToCart")
+if (buttonAddToCart != null) {
+    buttonAddToCart.addEventListener("click", (e) => {
+        const color = document.querySelector("#colors").value
+        const quantity = document.querySelector("#quantity").value
+        if (color == null || color === "" && quantity == 0) {
+            alert("Oups... 🥺\n\nTu n'as pas sélectionné de couleur pour ton canapé, et tu n'as pas indiqué combien tu en souhaites.\n\nVa vite arranger tout ça ! 😉")
+        }
+        if (color != null && color != "" && quantity == 0) {
+            alert("Oups... 🥺\n\nTu n'as pas indiqué combien tu veux de canapés.\n\nVa vite arranger ça ! 😉")
+        }
+        if (color == null || color === "" && quantity > 0) {
+            alert("Oups... 🥺\n\nTu n'as pas sélectionné de couleur pour ton canapé.\n\nVa vite arranger ça ! 😉")
+        }
+    })
+}
