@@ -3,6 +3,8 @@ import fetchID from "./product.js";
 
 // Déclaration de la variable dataLocalStorage afin de pouvoir l'utiliser dans les différentes fonctions ci-dessous
 let dataLocalStorage = localStorage;
+console.log(dataLocalStorage)
+console.log(localStorage)
 
 // La fonction async ci-dessous permet d'afficher les informations des produits dans le panier
 // Le @return permet d'ajouter les éléments un par un dans le DOM

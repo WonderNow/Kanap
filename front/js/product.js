@@ -126,11 +126,11 @@ if (buttonAddToCart != null) {
         // SI la couleur ET le nombre de canapés voulus sont correctement indiqués par l'utilisateur ALORS on envoie une alerte de confirmation personnalisée
         if (color != null && color != "" && quantity > 0) {
             alert("Félicitations ! 🎉\n\nCet article a bien été ajouté à ton panier ! 😉")
-            window.location.href = "cart.html" // Envoie directement sur la page Panier
+            // window.location.href = "cart.html" // Envoie directement sur la page Panier
         }
 
         // Ajout du produit dans le local storage
-        const dataForCart = {
+        let dataForCart = {
             color: color,
             id: id,
             name: data.name,
@@ -138,6 +138,7 @@ if (buttonAddToCart != null) {
             image: data.imageUrl,
             quantity: Number(quantity)
         }
+        console.log(dataForCart)
         localStorage.setItem(data.name, JSON.stringify(dataForCart)) // JSON.stringify() permet de transformer les données au format JSON afin de pouvoir les exploiter
     })
 }
