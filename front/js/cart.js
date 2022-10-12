@@ -1,23 +1,22 @@
 ﻿// Import de la fonction fetchID préalablement exportée dans le fichier "product.js"
 import fetchID from "./product.js";
 
-// Déclaration de la variable produitLocalStorage afin de pouvoir l'utiliser dans les différentes fonctions ci-dessous
-let produitLocalStorage;
-
+// Déclaration de la variable dataLocalStorage afin de pouvoir l'utiliser dans les différentes fonctions ci-dessous
+let dataLocalStorage = localStorage;
 
 // La fonction async ci-dessous permet d'afficher les informations des produits dans le panier
 // Le @return permet d'ajouter les éléments un par un dans le DOM
 async function addCard() {
-    console.log(produitLocalStorage);
+    console.log(dataLocalStorage);
 
     // S'il y a des produit présent dans local storage 
-    if (produitLocalStorage !== null) {
+    if (dataLocalStorage !== null) {
 
         // ALORS on récupère les produits et leurs informations une par une, dans une variable nommée key
-        for (let key in produitLocalStorage) {
+        for (let key in dataLocalStorage) {
 
             // Récupère l'ID du produit dans local Storage 
-            let pi = produitLocalStorage[Number(key)]._id;
+            let localStorageProductID = dataLocalStorage[Number(key)].id;
 
             console.log(await fetchID(productID));
 
@@ -29,9 +28,9 @@ async function addCard() {
                     // Créer un balise article  
                     let Article = document.createElement('article');
                     // Récupère la couleur du produit renseignée dans le local storage 
-                    colors = produitLocalStorage[key].colors;
+                    colors = dataLocalStorage[key].colors;
                     // Récupère la quantité du produit renseignée dans le local storage 
-                    quantity = String(produitLocalStorage[key].quantity);
+                    quantity = String(dataLocalStorage[key].quantity);
                     // Récupère l'image du produit ayant été retournée par l'API 
                     let Img = article.imageUrl;
                     // Récupère le texte descriptif de l'image du produit ayant été retourné par l'API
@@ -87,21 +86,4 @@ async function addCard() {
 }
 // Appel de la fonction addCard()
 addCard();
-
-
-//localStorage.setItem("clé", "valeur")
-//localStorage.getItem("clé")
-//localStorage.clear()
-
-/*
-Les éléments "title" aka "name", "value" aka "colors", "price" & "quantity"
-Doivent être ajoutés au localStorage lors du clic sur le bouton "addToCart"
-*/
-
-async function saveToLocalStorage() {
-    addToCart.onclick = () =>{
-        localStorage.setItem("title",title.value);
-    }
-}
-
 
