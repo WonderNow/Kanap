@@ -102,23 +102,42 @@ export default async function fetchID(productID)
 }
 
 
-// LOCALSTORAGE BRO
+// Alertes d'erreur ou de confirmation + Ajout du produit dans le local storage
 const buttonAddToCart = document.querySelector("#addToCart")
 if (buttonAddToCart != null) {
     buttonAddToCart.addEventListener("click", (e) => {
         const color = document.querySelector("#colors").value
         const quantity = document.querySelector("#quantity").value
+        // SI la couleur ET le nombre de canapés voulus ne sont pas indiqués par l'utilisateur ALORS on envoie une alerte d'erreur personnalisée
         if (color == null || color === "" && quantity == 0) {
             alert("Oups... 🥺\n\nTu n'as pas sélectionné de couleur pour ton canapé, et tu n'as pas indiqué combien tu en souhaites.\n\nVa vite arranger tout ça ! 😉")
+            return
         }
+        // SI la couleur est indiquée mais pas le nombre ALORS on envoie une alerte d'erreur personnalisée
         if (color != null && color != "" && quantity == 0) {
             alert("Oups... 🥺\n\nTu n'as pas indiqué combien tu veux de canapés.\n\nVa vite arranger ça ! 😉")
+            return
         }
+        // SI le nombre est indiqué mais pas la couleur ALORS on envoie une alerte d'erreur personnalisée
         if (color == null || color === "" && quantity > 0) {
             alert("Oups... 🥺\n\nTu n'as pas sélectionné de couleur pour ton canapé.\n\nVa vite arranger ça ! 😉")
+            return
         }
+        // SI la couleur ET le nombre de canapés voulus sont correctement indiqués par l'utilisateur ALORS on envoie une alerte de confirmation personnalisée
         if (color != null && color != "" && quantity > 0) {
             alert("Félicitations ! 🎉\n\nCet article a bien été ajouté à ton panier ! 😉")
+            window.location.href = "cart.html" // Envoie directement sur la page Panier
         }
+
+        // Ajout du produit dans le local storage
+        const dataForCart = {
+            color: color,
+            id: id,
+            name: data.name,
+            price: data.price,
+            image: data.imageUrl,
+            quantity: Number(quantity)
+        }
+        localStorage.setItem(data.name, JSON.stringify(dataForCart)) // JSON.stringify() permet de transformer les données au format JSON afin de pouvoir les exploiter
     })
 }
