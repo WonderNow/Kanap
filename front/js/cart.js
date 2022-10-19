@@ -2,9 +2,14 @@
 import fetchID from "./product.js";
 
 // Déclaration de la variable dataLocalStorage afin de pouvoir l'utiliser dans les différentes fonctions ci-dessous
-let dataLocalStorage = localStorage;
-console.log(dataLocalStorage)
-console.log(localStorage)
+
+let dataLocalStorage = JSON.parse(localStorage.getItem('dataForCart'));
+console.log(localStorage);
+console.log('dataLocalStorage',dataLocalStorage);
+
+let section = document.querySelector("#cart__items");
+let colors;
+let quantity;
 
 // La fonction async ci-dessous permet d'afficher les informations des produits dans le panier
 // Le @return permet d'ajouter les éléments un par un dans le DOM
@@ -13,12 +18,14 @@ async function addCard() {
 
     // S'il y a des produit présent dans local storage 
     if (dataLocalStorage !== null) {
-
+        console.log(dataLocalStorage)
         // ALORS on récupère les produits et leurs informations une par une, dans une variable nommée key
         for (let key in dataLocalStorage) {
 
+            console.log(key.id);
+
             // Récupère l'ID du produit dans local Storage 
-            let localStorageProductID = dataLocalStorage[Number(key)].id;
+            let productID = dataLocalStorage[Number(key)].id;
 
             console.log(await fetchID(productID));
 
@@ -30,7 +37,7 @@ async function addCard() {
                     // Créer un balise article  
                     let Article = document.createElement('article');
                     // Récupère la couleur du produit renseignée dans le local storage 
-                    colors = dataLocalStorage[key].colors;
+                    colors = dataLocalStorage[key].color;
                     // Récupère la quantité du produit renseignée dans le local storage 
                     quantity = String(dataLocalStorage[key].quantity);
                     // Récupère l'image du produit ayant été retournée par l'API 
@@ -46,7 +53,7 @@ async function addCard() {
                     // Ajout de la classe "cart__item" 
                     Article.classList.add("cart__item")
                     // Ajout de l'attribut "data-id"
-                    Article.setAttribute("data-id", `${id}`);
+                    Article.setAttribute("data-id", `${productID}`);
                     // Ajout de l'attribut "data-color"
                     Article.setAttribute("data-color", `${colors}`);
                     // Ajout des éléments sous format HTML, en suivant le format indiqué dans le fichier 'cart.html'
@@ -89,3 +96,10 @@ async function addCard() {
 // Appel de la fonction addCard()
 addCard();
 
+function total(price, quantity){}
+
+function supprimer(){}
+
+function modifieQ(){}
+
+function ValidationOfOrder(){}

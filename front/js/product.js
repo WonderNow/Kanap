@@ -60,17 +60,16 @@ export default async function fetchID(productID)
  * Enfin, appelle la function produit avec l'article récupéré 
  */
  fetchID(id)
- .then((data) => { produit(data) })
+ .then((data) => {produit(data) })
  .catch((err) => console.log(err));
 
 
 
 
-
 /**
- * Ajoute les données de l'API dans les différentes balises du DOM
-  @param {} data 
- */
+ Ajoute les données de l'API dans les différentes balises du DOM
+ @param {*} data 
+*/
   async function produit(data) {
     console.log(data);
     if (data !== undefined) {
@@ -126,19 +125,23 @@ if (buttonAddToCart != null) {
         // SI la couleur ET le nombre de canapés voulus sont correctement indiqués par l'utilisateur ALORS on envoie une alerte de confirmation personnalisée
         if (color != null && color != "" && quantity > 0) {
             alert("Félicitations ! 🎉\n\nCet article a bien été ajouté à ton panier ! 😉")
-            // window.location.href = "cart.html" // Envoie directement sur la page Panier
+            window.location.href = "cart.html" // Envoie directement sur la page Panier
         }
 
         // Ajout du produit dans le local storage
-        let dataForCart = {
+        const dataForCart = {
             color: color,
             id: id,
-            name: data.name,
-            price: data.price,
-            image: data.imageUrl,
             quantity: Number(quantity)
         }
-        console.log(dataForCart)
-        localStorage.setItem(data.name, JSON.stringify(dataForCart)) // JSON.stringify() permet de transformer les données au format JSON afin de pouvoir les exploiter
+        let produitLocalStorage = JSON.parse(localStorage.getItem("dataForCart"));
+
+        if(produitLocalStorage == null){
+            produitLocalStorage = [];
+        }
+
+        produitLocalStorage.push(dataForCart);
+
+        localStorage.setItem("dataForCart", JSON.stringify(produitLocalStorage)) // JSON.stringify() permet de transformer les données au format JSON afin de pouvoir les exploiter
     })
 }
