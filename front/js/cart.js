@@ -83,6 +83,8 @@ async function addCard() {
         }
 
         nombreArticlesTotal ()
+        recuperationPrixArticles()
+        prixTotalArticles()
     }
     else {
         let titre_Alert = document.getElementById('cart__items');
@@ -107,6 +109,26 @@ function nombreArticlesTotal () {
     let quantityTotal = document.getElementById('totalQuantity');
     // ajoute la quantité total au DOM
     quantityTotal.innerHTML = totalArticlesQuantity;
+}
+
+// Récupère le prix de chaque article
+function recuperationPrixArticles() {
+    console.log("Test");
+}
+
+// Calcule et affiche le prix total de canapés dans le panier
+function prixTotalArticles() {
+    let totalArticlesPrice = 0;
+    for(const cartItemKey in cartItems){
+        let cartItem = cartItems[cartItemKey];
+        totalArticlesPrice += cartItem.quantity;
+        }
+    console.log(`Prix total des articles : ${totalArticlesQuantity}`);
+
+    // récupère la balise l'id totalQuantity 
+    let quantityTotal = document.getElementById('totalPrice');
+    // ajoute la quantité total au DOM
+    quantityTotal.innerHTML = totalArticlesPrice;
 }
 
 function supprimer(){}
