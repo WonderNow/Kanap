@@ -1,11 +1,11 @@
 ﻿// Import de la fonction fetchID préalablement exportée dans le fichier "product.js"
 import fetchID from "./product.js";
 
-// Déclaration de la variable dataLocalStorage afin de pouvoir l'utiliser dans les différentes fonctions ci-dessous
+// Déclaration de la variable cartItems afin de pouvoir l'utiliser dans les différentes fonctions ci-dessous
 
-let dataLocalStorage = JSON.parse(localStorage.getItem('dataForCart'));
+let cartItems = JSON.parse(localStorage.getItem('dataForCart'));
 console.log(localStorage);
-console.log('dataLocalStorage',dataLocalStorage);
+console.log('cartItems',cartItems);
 
 let section = document.querySelector("#cart__items");
 let colors;
@@ -14,18 +14,15 @@ let quantity;
 // La fonction async ci-dessous permet d'afficher les informations des produits dans le panier
 // Le @return permet d'ajouter les éléments un par un dans le DOM
 async function addCard() {
-    console.log(dataLocalStorage);
 
     // S'il y a des produit présent dans local storage 
-    if (dataLocalStorage !== null) {
-        console.log(dataLocalStorage)
-        // ALORS on récupère les produits et leurs informations une par une, dans une variable nommée key
-        for (let key in dataLocalStorage) {
-
-            console.log(key.id);
+    if (cartItems !== null) {
+        console.log(cartItems)
+        // ALORS on récupère les produits et leurs informations une par une, dans une variable nommée cartItemKey
+        for (let cartItemKey in cartItems) {
 
             // Récupère l'ID du produit dans local Storage 
-            let productID = dataLocalStorage[Number(key)].id;
+            let productID = cartItems[Number(cartItemKey)].id;
 
             console.log(await fetchID(productID));
 
@@ -37,9 +34,9 @@ async function addCard() {
                     // Créer un balise article  
                     let Article = document.createElement('article');
                     // Récupère la couleur du produit renseignée dans le local storage 
-                    colors = dataLocalStorage[key].color;
+                    colors = cartItems[cartItemKey].color;
                     // Récupère la quantité du produit renseignée dans le local storage 
-                    quantity = String(dataLocalStorage[key].quantity);
+                    quantity = String(cartItems[cartItemKey].quantity);
                     // Récupère l'image du produit ayant été retournée par l'API 
                     let Img = article.imageUrl;
                     // Récupère le texte descriptif de l'image du produit ayant été retourné par l'API
@@ -77,7 +74,6 @@ async function addCard() {
                             </div>
                     </div> `;
 
-                    total(Price, quantity);
                 })
 
             // Appel des function suivante une fois que les produits sont insérés
@@ -85,6 +81,8 @@ async function addCard() {
             modifieQ();
             ValidationOfOrder();
         }
+
+        nombreArticlesTotal ()
     }
     else {
         let titre_Alert = document.getElementById('cart__items');
@@ -96,7 +94,20 @@ async function addCard() {
 // Appel de la fonction addCard()
 addCard();
 
-function total(price, quantity){}
+// Calcule et affiche le nombre total de canapés dans le panier
+function nombreArticlesTotal () {
+    let totalArticlesQuantity = 0;
+    for(const cartItemKey in cartItems){
+        let cartItem = cartItems[cartItemKey];
+        totalArticlesQuantity += cartItem.quantity;
+        }
+    console.log(`Nombre total d'articles : ${totalArticlesQuantity}`);
+
+    // récupère la balise l'id totalQuantity 
+    let quantityTotal = document.getElementById('totalQuantity');
+    // ajoute la quantité total au DOM
+    quantityTotal.innerHTML = totalArticlesQuantity;
+}
 
 function supprimer(){}
 

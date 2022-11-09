@@ -70,7 +70,7 @@ export default async function fetchID(productID)
  Ajoute les données de l'API dans les différentes balises du DOM
  @param {*} data 
 */
-  async function produit(data) {
+async function produit(data) {
     console.log(data);
     if (data !== undefined) {
         // Récupère la balise avec la classe 'item_img' et lui ajoute l'image du produit */
