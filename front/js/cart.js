@@ -74,6 +74,8 @@ async function addCard() {
                             </div>
                     </div> `;
 
+                    total(Price, quantity);
+
                 })
 
             // Appel des function suivante une fois que les produits sont insérés
@@ -82,9 +84,6 @@ async function addCard() {
             ValidationOfOrder();
         }
 
-        nombreArticlesTotal ()
-        recuperationPrixArticles()
-        prixTotalArticles()
     }
     else {
         let titre_Alert = document.getElementById('cart__items');
@@ -96,39 +95,45 @@ async function addCard() {
 // Appel de la fonction addCard()
 addCard();
 
-// Calcule et affiche le nombre total de canapés dans le panier
-function nombreArticlesTotal () {
-    let totalArticlesQuantity = 0;
-    for(const cartItemKey in cartItems){
-        let cartItem = cartItems[cartItemKey];
-        totalArticlesQuantity += cartItem.quantity;
-        }
-    console.log(`Nombre total d'articles : ${totalArticlesQuantity}`);
+let tabPrice = [];
+let tabQuantite = [];
 
+function total(price, quantite) {
+    console.log('price', price);
+    console.log('quantité', quantite);
     // récupère la balise l'id totalQuantity 
     let quantityTotal = document.getElementById('totalQuantity');
+    // récupère la balise totalPrice 
+    let prixTotal = document.getElementById('totalPrice');
+    // nombre de la quantité total
+    let totalQ = 0;
+    // nombre du prix total 
+    let totalP = 0;
+    // récupère la quantité selection lors de l'ajout dans le local storage 
+    let QNumber = Number(quantite);
+    // ajoute le prix du produit dans le tableau du prix 
+    tabPrice.push({ price });
+    // ajoute la quantité du produit dans le tableau de le quantité
+    tabQuantite.push({ QNumber })
+
+    console.log(tabPrice);
+    console.log(tabQuantite);
+    // récupère les produits présent dans le tableau de prix un par un dans une variable 
+    for (let key in tabPrice) {
+        console.log(tabPrice[key].price)
+        // calcul le prix total et les enregistre dans leur variable 
+        totalP += (tabQuantite[key].QNumber * tabPrice[key].price);
+        // calcul la quantité total et les enregistre dans leur variable 
+        totalQ += tabQuantite[key].QNumber;
+    }
+    console.log(totalP);
+    console.log(totalQ);
+
     // ajoute la quantité total au DOM
-    quantityTotal.innerHTML = totalArticlesQuantity;
-}
+    quantityTotal.innerHTML = totalQ;
+    // ajoute le prix total au DOM
+    prixTotal.innerHTML = totalP;
 
-// Récupère le prix de chaque article
-function recuperationPrixArticles() {
-    console.log("Test");
-}
-
-// Calcule et affiche le prix total de canapés dans le panier
-function prixTotalArticles() {
-    let totalArticlesPrice = 0;
-    for(const cartItemKey in cartItems){
-        let cartItem = cartItems[cartItemKey];
-        totalArticlesPrice += cartItem.quantity;
-        }
-    console.log(`Prix total des articles : ${totalArticlesQuantity}`);
-
-    // récupère la balise l'id totalQuantity 
-    let quantityTotal = document.getElementById('totalPrice');
-    // ajoute la quantité total au DOM
-    quantityTotal.innerHTML = totalArticlesPrice;
 }
 
 function supprimer(){}
