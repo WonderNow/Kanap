@@ -182,13 +182,13 @@ function modifieQ() {
             // récupère la quantité de la case du produit cliqué 
             let _QUANTITY = modify[i].value;
             // filtre les produits qui ont l'id et la couleur identique a celui cliquer 
-            let produit = produitLocalStorage.find(element => element._id == ID && element.colors == COLOR);
+            let produit = cartItems.find(element => element._id == _ID && element.colors == _COLOR);
             // ajoute la quantité modifier au produit cliqué
             produit.quantity = _QUANTITY;
             // modifie la quantité du produit 
-            produitLocalStorage[i].quantity = produit.quantity;
+            cartItems[i].quantity = produit.quantity;
             // ajoute la quantité modifier dans le localStorage 
-            localStorage.setItem("obj", JSON.stringify(produitLocalStorage));
+            localStorage.setItem("obj", JSON.stringify(cartItems));
             // recharge la page pour affiché la quantité modifier
             location.reload();
 
