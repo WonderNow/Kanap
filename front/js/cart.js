@@ -1,4 +1,4 @@
-﻿// Import de la fonction fetchID préalablement exportée dans le fichier "product.js"
+﻿﻿// Import de la fonction fetchID préalablement exportée dans le fichier "product.js"
 import fetchID from "./product.js";
 
 // Déclaration de la variable cartItems afin de pouvoir l'utiliser dans les différentes fonctions ci-dessous
@@ -136,8 +136,64 @@ function total(price, quantite) {
 
 }
 
-function supprimer(){}
+/**
+ * ajoute un événement de type click au balise ayant l'id deleteItem 
+ ** Supprime l'élément cliqué dans le localStorage
+ */
+ function supprimer() {
+    let sup = document.querySelectorAll("#deleteItem");
+    console.log(sup);
+    // récupère les balise ayant l'id deleteItem un par un 
+    for (let i = 0; i < sup.length; i++) {
+        // ajoute l'événement de type click au bouton supprimé de chaque produit présent dans le localStorage
+        sup[i].addEventListener("click", () => {
+            console.log('sup');
+            // récupère l'id du produit cliqué  
+            let _ID = sup[i].closest("article").dataset.id;
+            // récupère la couleur du produit cliqué 
+            let _COLOR = sup[i].closest("article").dataset.color;
+            // filtre les produits qui n'ont pas l'id et la couleur identique a celui cliquer 
+            cartItems = cartItems.filter(element => element._id !== _ID || element.colors !== _COLOR);
+            // modifie objet present dans localStorage 
+            localStorage.setItem("obj", JSON.stringify(cartItems));
+            // recharge la page pour affiché les modifications 
+            // location.reload();
+            console.log(cartItems);
+        });
+    };
+}
 
-function modifieQ(){}
+
+/**
+* ajoute un événement de type click au balise ayant la class itemQuantity
+** modifie la quantité du produit cliqué
+*/
+function modifieQ() {
+    // récupère les balise ayant la class itemQuantity
+    let modify = document.querySelectorAll('.itemQuantity');
+    // récupère les balise ayant la class itemQuantity un par un 
+    for (let i = 0; i < modify.length; i++) {
+        // ajoute un événement de type a la case modifier de chaque produit présent dans localStorage 
+        modify[i].addEventListener('change', () => {
+            // récupère l'id du produit cliqué 
+            let _ID = modify[i].closest("article").dataset.id;
+            // récupère la couleur du produit cliqué 
+            let _COLOR = modify[i].closest("article").dataset.color;
+            // récupère la quantité de la case du produit cliqué 
+            let _QUANTITY = modify[i].value;
+            // filtre les produits qui ont l'id et la couleur identique a celui cliquer 
+            let produit = produitLocalStorage.find(element => element._id == ID && element.colors == COLOR);
+            // ajoute la quantité modifier au produit cliqué
+            produit.quantity = _QUANTITY;
+            // modifie la quantité du produit 
+            produitLocalStorage[i].quantity = produit.quantity;
+            // ajoute la quantité modifier dans le localStorage 
+            localStorage.setItem("obj", JSON.stringify(produitLocalStorage));
+            // recharge la page pour affiché la quantité modifier
+            location.reload();
+
+        })
+    }
+}
 
 function ValidationOfOrder(){}
