@@ -153,11 +153,11 @@ function total(price, quantite) {
             // récupère la couleur du produit cliqué 
             let _COLOR = sup[i].closest("article").dataset.color;
             // filtre les produits qui n'ont pas l'id et la couleur identique a celui cliquer 
-            cartItems = cartItems.filter(element => element._id !== _ID || element.colors !== _COLOR);
+            cartItems = cartItems.filter(element => element.id !== _ID || element.color !== _COLOR);
             // modifie objet present dans localStorage 
             localStorage.setItem("obj", JSON.stringify(cartItems));
             // recharge la page pour affiché les modifications 
-            // location.reload();
+            location.reload();
             console.log(cartItems);
         });
     };
@@ -182,7 +182,9 @@ function modifieQ() {
             // récupère la quantité de la case du produit cliqué 
             let _QUANTITY = modify[i].value;
             // filtre les produits qui ont l'id et la couleur identique a celui cliquer 
-            let produit = cartItems.find(element => element._id == _ID && element.colors == _COLOR);
+            let produit = cartItems.find(element => element.id == _ID && element.color == _COLOR);
+            console.log(produit);
+            console.log(cartItems);
             // ajoute la quantité modifier au produit cliqué
             produit.quantity = _QUANTITY;
             // modifie la quantité du produit 
