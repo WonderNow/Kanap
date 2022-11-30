@@ -155,7 +155,7 @@ function total(price, quantite) {
             // filtre les produits qui n'ont pas l'id et la couleur identique a celui cliquer 
             cartItems = cartItems.filter(element => element.id !== _ID || element.color !== _COLOR);
             // modifie objet present dans localStorage 
-            localStorage.setItem("obj", JSON.stringify(cartItems));
+            localStorage.setItem("dataForCart", JSON.stringify(cartItems));
             // recharge la page pour affiché les modifications 
             location.reload();
             console.log(cartItems);
@@ -190,7 +190,7 @@ function modifieQ() {
             // modifie la quantité du produit 
             cartItems[i].quantity = produit.quantity;
             // ajoute la quantité modifier dans le localStorage 
-            localStorage.setItem("obj", JSON.stringify(cartItems));
+            localStorage.setItem("dataForCart", JSON.stringify(cartItems));
             // recharge la page pour affiché la quantité modifier
             location.reload();
 
@@ -198,4 +198,235 @@ function modifieQ() {
     }
 }
 
-function ValidationOfOrder(){}
+// VALIDATION DE COMMANDE \\
+
+// Variable
+let firstName = document.getElementById('firstName');
+let firstNameErrorMsg = document.getElementById('firstNameErrorMsg');
+let lastName = document.getElementById('lastName');
+let lastNameErrorMsg = document.getElementById('lastNameErrorMsg');
+let address = document.getElementById('address');
+let addressErrorMsg = document.getElementById('addressErrorMsg');
+let city = document.getElementById('city');
+let cityErrorMsg = document.getElementById('cityErrorMsg');
+let email = document.getElementById('email');
+let emailErrorMsg = document.getElementById('emailErrorMsg');
+let BtnCommander = document.getElementById('order');
+
+
+
+// RegExp
+let Regex = new RegExp("^[a-zA-Zéèàêîôâ ,.'-]+$");
+let addressRegex = new RegExp("^[0-9a-zA-Z]{1,3}[a-z A-Z-'-éèàçêîôâ]{1,20}$");
+let emailRegex = new RegExp('^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$');
+
+
+/**
+ * Écoute les événements sur les inputs et les compare au regex
+ * @returns boolean 
+ */
+function verify() {
+
+    // PRÉNOM
+    validFirstName();
+    function validFirstName() {
+        console.log(firstName.value);
+        if (firstName.value.length == 0) {
+            firstNameErrorMsg.innerHTML = "Merci de renseigner ce champ !";
+        }
+        else if (Regex.test(firstName.value)) {
+
+            firstNameErrorMsg.innerHTML = "";
+            return true;
+
+        } else {
+
+            firstNameErrorMsg.innerHTML = "Merci de vérifier ce champ !";
+            return false;
+
+        }
+    };
+    firstName.addEventListener('change', () => {
+        console.log(firstName.value);
+        validFirstName();
+    });
+
+    // NOM DE FAMILLE
+    validLastName();
+    function validLastName() {
+        console.log(lastName.value);
+        if (lastName.value.length == 0) {
+
+            lastNameErrorMsg.innerHTML = "Merci de renseigner ce champ !";
+
+        } else if (Regex.test(lastName.value)) {
+            lastNameErrorMsg.innerHTML = "";
+            return true;
+        } else {
+            lastNameErrorMsg.innerHTML = "Merci de vérifier ce champ !";
+            return false;
+        }
+    }
+    lastName.addEventListener('change', () => {
+        console.log(lastName.value);
+        validLastName();
+    });
+
+    // ADRESSE
+    validAddress();
+    function validAddress() {
+        console.log(address.value);
+        if (address.value.length === 0) {
+
+            addressErrorMsg.innerHTML = "Merci de renseigner ce champ !";
+        }
+        else if (addressRegex.test(address.value)) {
+            addressErrorMsg.innerHTML = "";
+            return true;
+        } else {
+            addressErrorMsg.innerHTML = "Merci de vérifier ce champ !";
+            return false;
+        }
+    }
+    address.addEventListener('change', () => {
+        console.log(address.value);
+        validAddress();
+    });
+
+    // VILLE
+    validCity();
+    function validCity() {
+        if (city.value.length == 0) {
+            cityErrorMsg.innerHTML = "Merci de renseigner ce champ !";
+
+        }
+        else if (Regex.test(city.value)) {
+            cityErrorMsg.innerHTML = "";
+            return true;
+        } else {
+            cityErrorMsg.innerHTML = "Merci de vérifier ce champ !";
+            return false;
+        }
+    }
+    city.addEventListener('change', () => {
+        console.log(city.value);
+        validCity();
+
+
+    });
+
+    // EMAIL
+    validEmail();
+    function validEmail() {
+        if (email.value.length == 0) {
+            emailErrorMsg.innerHTML = "Merci de renseigner ce champ !";
+
+        }
+        else if (emailRegex.test(email.value)) {
+            emailErrorMsg.innerHTML = "";
+            return true;
+        } else {
+            emailErrorMsg.innerHTML = "Merci de vérifier ce champ !";
+            return false;
+        }
+    }
+    email.addEventListener('change', () => {
+        console.log(email.value);
+        validEmail();
+    });
+
+    // Si tous les champs sont valides après la verification des regex, alors renvoie true, sinon renvoie false 
+    if (validFirstName() & validLastName() & validAddress() & validCity() & validEmail()) {
+        return true;
+    } else {
+        return false;
+    }
+
+}
+
+
+
+/**
+ * Ajoute un événement de type click au bouton "Commander !"
+ * Vérifie la validation des informations saisies par l'utilisateur 
+ * Envoie le tableau de commande a l'API 
+ * @return l'utilisateur sur la page confirmation de commande 
+ */
+function ValidationOfOrder() {
+    // Ajoute un événement de type click a la balise ayant l'id order
+    BtnCommander.addEventListener('click', (e) => {
+        // Désactive les événements par default
+        e.preventDefault();
+        // Tableau contenant les id des produits présents dans le panier lors du passage de la commande
+        let id = [];
+        console.log(cartItems);
+        // Si la variable cartItems est déclaré et n'est pas null
+        if (cartItems !== null) {
+            // Si produitLocalStrorage a au moins un élément présent 
+            if (cartItems.length >= 1) {
+                // Récupère les produits un par un 
+                for (let i = 0; i < cartItems.length; i++) {
+                    // Ajoute l'ID du produit dans le tableau
+                    id.push(cartItems[i]._id);
+                }
+            }
+            else {
+                // Affiche une alerte si le panier est vide
+                alert('le panier est vide !')
+            }
+        }
+
+        console.log(id)
+;
+        // Créer un tableau avec les informations renseignées  
+        const tab = {
+            contact: {
+                firstName: firstName.value,
+                lastName: lastName.value,
+                address: address.value,
+                city: city.value,
+                email: email.value,
+            },
+            products: id,
+        };
+        // Créer un objet contenant les options pour la requête
+        const options = {
+            method: 'POST',
+            body: JSON.stringify(tab),
+            headers: {
+                'Accept': 'application/json',
+                "content-type": "application/json"
+            },
+        };
+
+        // Envoi de l'objet contact et du tableau des id de chaque produit présent lors de la commande 
+        console.log(verify());
+        // Si les informations renseignées dans le formulaire de commande sont valides
+        if (verify()) {
+            // Si la variable cartItems est déclarée et n'est pas null 
+            if (cartItems !== null) {
+                // Si les produits sont présents dans le panier et sont supérieurs ou égaux à 1
+                if (cartItems.length >= 1) {
+                    // Requête l'API avec les informations de commande dans le corps de la requête 
+                    fetch("http://localhost:3000/api/products//order", options)
+
+                        // Passe la réponse de l'api au format .json 
+                        .then((response) => response.json())
+                        .then((res) => {
+                            console.log(res.orderId);
+                            // Vide le panier 
+                            localStorage.clear('dataForCart');
+                            // Redirige l'utilisateur sur la page de confirmation
+                            document.location.href = 'confirmation.html?orderId=' + res.orderId;
+
+                        })
+
+                        .catch((error) => {
+                            console.log("error :" + error)
+                        })
+
+                }
+            }
+        }
+    })
+}
