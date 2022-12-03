@@ -2,6 +2,7 @@ let data;
 let id;
 
 
+
 // Récupère l'ID présent dans l'URL concernée
 let url = new URL(window.location.href);
 console.log(url);
@@ -12,7 +13,6 @@ if (search_params.has('id')) {
     id = search_params.get('id');
 }
 
-console.log(id);
 
 
 /**
@@ -65,7 +65,6 @@ export default async function fetchID(productID)
 
 
 
-
 /**
  Ajoute les données de l'API dans les différentes balises du DOM
  @param {*} data 
@@ -99,6 +98,7 @@ async function produit(data) {
         }
     }
 }
+
 
 
 // Alertes d'erreur ou de confirmation + Ajout du produit dans le local storage
