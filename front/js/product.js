@@ -55,9 +55,9 @@ export default async function fetchID(productID)
 
 
 /**
- * Appelle de la function fetchID()
+ * Appel de la function fetchID()
  * Récupère le résultat de la requête dans une variable 
- * Enfin, appelle la function produit avec l'article récupéré 
+ * Enfin, appel la function produit avec l'article récupéré 
  */
  fetchID(id)
  .then((data) => {produit(data) })
@@ -102,46 +102,51 @@ async function produit(data) {
 
 
 // Alertes d'erreur ou de confirmation + Ajout du produit dans le local storage
-const buttonAddToCart = document.querySelector("#addToCart")
-if (buttonAddToCart != null) {
-    buttonAddToCart.addEventListener("click", (e) => {
-        const color = document.querySelector("#colors").value
-        const quantity = document.querySelector("#quantity").value
-        // SI la couleur ET le nombre de canapés voulus ne sont pas indiqués par l'utilisateur ALORS on envoie une alerte d'erreur personnalisée
-        if (color == null || color === "" && quantity == 0) {
-            alert("Oups... 🥺\n\nTu n'as pas sélectionné de couleur pour ton canapé, et tu n'as pas indiqué combien tu en souhaites.\n\nVa vite arranger tout ça ! 😉")
-            return
-        }
-        // SI la couleur est indiquée mais pas le nombre ALORS on envoie une alerte d'erreur personnalisée
-        if (color != null && color != "" && quantity == 0) {
-            alert("Oups... 🥺\n\nTu n'as pas indiqué combien tu veux de canapés.\n\nVa vite arranger ça ! 😉")
-            return
-        }
-        // SI le nombre est indiqué mais pas la couleur ALORS on envoie une alerte d'erreur personnalisée
-        if (color == null || color === "" && quantity > 0) {
-            alert("Oups... 🥺\n\nTu n'as pas sélectionné de couleur pour ton canapé.\n\nVa vite arranger ça ! 😉")
-            return
-        }
-        // SI la couleur ET le nombre de canapés voulus sont correctement indiqués par l'utilisateur ALORS on envoie une alerte de confirmation personnalisée
-        if (color != null && color != "" && quantity > 0) {
-            alert("Félicitations ! 🎉\n\nCet article a bien été ajouté à ton panier ! 😉")
-            window.location.href = "cart.html" // Envoie directement sur la page Panier
-        }
+function alertesAndLocalStorage() {
+    const buttonAddToCart = document.querySelector("#addToCart")
+    if (buttonAddToCart != null) {
+        buttonAddToCart.addEventListener("click", (e) => {
+            const color = document.querySelector("#colors").value
+            const quantity = document.querySelector("#quantity").value
+            // SI la couleur ET le nombre de canapés voulus ne sont pas indiqués par l'utilisateur ALORS on envoie une alerte d'erreur personnalisée
+            if (color == null || color === "" && quantity == 0) {
+                alert("Oups... 🥺\n\nTu n'as pas sélectionné de couleur pour ton canapé, et tu n'as pas indiqué combien tu en souhaites.\n\nVa vite arranger tout ça ! 😉")
+                return
+            }
+            // SI la couleur est indiquée mais pas le nombre ALORS on envoie une alerte d'erreur personnalisée
+            if (color != null && color != "" && quantity == 0) {
+                alert("Oups... 🥺\n\nTu n'as pas indiqué combien tu veux de canapés.\n\nVa vite arranger ça ! 😉")
+                return
+            }
+            // SI le nombre est indiqué mais pas la couleur ALORS on envoie une alerte d'erreur personnalisée
+            if (color == null || color === "" && quantity > 0) {
+                alert("Oups... 🥺\n\nTu n'as pas sélectionné de couleur pour ton canapé.\n\nVa vite arranger ça ! 😉")
+                return
+            }
+            // SI la couleur ET le nombre de canapés voulus sont correctement indiqués par l'utilisateur ALORS on envoie une alerte de confirmation personnalisée
+            if (color != null && color != "" && quantity > 0) {
+                alert("Félicitations ! 🎉\n\nCet article a bien été ajouté à ton panier ! 😉")
+                // window.location.href = "cart.html" // Envoie directement sur la page Panier
+            }
 
-        // Ajout du produit dans le local storage
-        const dataForCart = {
-            color: color,
-            id: id,
-            quantity: Number(quantity)
-        }
-        let produitLocalStorage = JSON.parse(localStorage.getItem("dataForCart"));
+            // Ajout du produit dans le local storage
+            const dataForCart = {
+                color: color,
+                id: id,
+                quantity: Number(quantity)
+            }
+            let produitLocalStorage = JSON.parse(localStorage.getItem("dataForCart"));
 
-        if(produitLocalStorage == null){
-            produitLocalStorage = [];
-        }
+            if(produitLocalStorage == null){
+                produitLocalStorage = [];
+            }
 
-        produitLocalStorage.push(dataForCart);
+            produitLocalStorage.push(dataForCart);
 
-        localStorage.setItem("dataForCart", JSON.stringify(produitLocalStorage)) // JSON.stringify() permet de transformer les données au format JSON afin de pouvoir les exploiter
-    })
+            localStorage.setItem("dataForCart", JSON.stringify(produitLocalStorage)) // JSON.stringify() permet de transformer les données au format JSON afin de pouvoir les exploiter
+        })
+    }
 }
+
+// Appel de la fonction alertesAndLocalStorage
+alertesAndLocalStorage();
