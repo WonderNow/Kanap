@@ -18,6 +18,12 @@ async function addCard() {
     // S'il y a des produit présent dans local storage 
     if (cartItems !== null) {
         console.log(cartItems)
+
+        //trie les articles du local storage par son id
+        cartItems.sort((a, b) => {
+			return a.id.localeCompare(b.id);
+		});
+        
         // ALORS on récupère les produits et leurs informations une par une, dans une variable nommée cartItemKey
         for (let cartItemKey in cartItems) {
 
@@ -367,7 +373,7 @@ function ValidationOfOrder() {
                 // Récupère les produits un par un 
                 for (let i = 0; i < cartItems.length; i++) {
                     // Ajoute l'ID du produit dans le tableau
-                    id.push(cartItems[i]._id);
+                    id.push(cartItems[i].id);
                 }
             }
             else {
@@ -378,7 +384,7 @@ function ValidationOfOrder() {
 
         console.log(id)
 ;
-        // Créer un tableau avec les informations renseignées  
+        // Création d'un tableau avec les informations renseignées  
         const tab = {
             contact: {
                 firstName: firstName.value,
@@ -389,7 +395,7 @@ function ValidationOfOrder() {
             },
             products: id,
         };
-        // Créer un objet contenant les options pour la requête
+        // Création d'un objet contenant les options pour la requête
         const options = {
             method: 'POST',
             body: JSON.stringify(tab),
