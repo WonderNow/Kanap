@@ -104,6 +104,9 @@ addCard();
 let tabPrice = [];
 let tabQuantite = [];
 
+
+// Calcule le total des articles présents dans le panier, ainsi que le prix total
+// Affiche ces deux valeurs à l'écran en ciblant les ID correspondants dans le DOM
 function total(price, quantite) {
     console.log('price', price);
     console.log('quantité', quantite);
@@ -141,8 +144,8 @@ function total(price, quantite) {
     prixTotal.innerHTML = totalP;
 }
 
-// Ajoute un événement de type click au balise ayant l'id deleteItem 
-// Supprime l'élément cliqué dans le localStorage
+// Ajoute un événement de type click aux balises ayant l'id deleteItem 
+// Supprime l'élément ciblé di localStorage
 function supprimer() {
     let sup = document.querySelectorAll("#deleteItem");
     console.log(sup);
@@ -312,8 +315,6 @@ function verify() {
     city.addEventListener('change', () => {
         console.log(city.value);
         validCity();
-
-
     });
 
     // EMAIL
@@ -350,7 +351,7 @@ function verify() {
 /**
  * Ajoute un événement de type click au bouton "Commander !"
  * Vérifie la validation des informations saisies par l'utilisateur 
- * Envoie le tableau de commande a l'API 
+ * Envoie le tableau rédapitulatif des données de l'utilisateur à l'API 
  * @return l'utilisateur sur la page confirmation de commande 
  */
 function validationOfOrder() {
@@ -402,7 +403,7 @@ function validationOfOrder() {
 
         // Envoi de l'objet contact et du tableau des id de chaque produit présent lors de la commande 
         console.log(verify());
-        // Si les informations renseignées dans le formulaire de commande sont valides
+        // Si les informations renseignées dans le formulaire de commande sont valides 
         if (verify()) {
             // Si la variable cartItems est déclarée et n'est pas null 
             if (cartItems !== null) {
