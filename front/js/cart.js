@@ -19,7 +19,7 @@ async function addCard() {
     if (cartItems !== null) {
         console.log(cartItems)
 
-        //trie les articles du local storage par son id
+        // Triage des articles du local storage en fonction de leurs ID
         cartItems.sort((a, b) => {
 			return a.id.localeCompare(b.id);
 		});
