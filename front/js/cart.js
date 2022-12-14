@@ -78,13 +78,13 @@ async function addCard() {
                                     <p id="deleteItem" class="deleteItem">Supprimer</p>
                                 </div>
                             </div>
-                    </div> `;
+                        </div> `;
 
                     total(Price, quantity);
 
                 })
 
-            // Appel des function suivante une fois que les produits sont insérés
+            // Appel des fonctions suivantes une fois que les produits sont insérés
             supprimer();
             modifieQ();
             validationOfOrder();
@@ -110,37 +110,37 @@ let tabQuantite = [];
 function total(price, quantite) {
     console.log('price', price);
     console.log('quantité', quantite);
-    // récupère la balise l'id totalQuantity 
+    // Récupère la balise de l'ID totalQuantity
     let quantityTotal = document.getElementById('totalQuantity');
-    // récupère la balise totalPrice 
+    // Récupère la balise de l'ID totalPrice
     let prixTotal = document.getElementById('totalPrice');
-    // nombre de la quantité total
+    // Nombre de la quantité total
     let totalQ = 0;
-    // nombre du prix total 
+    // Nombre du prix total
     let totalP = 0;
-    // récupère la quantité selection lors de l'ajout dans le local storage 
+    // Récupère la quantité selectionnée lors de l'ajout dans le localStorage
     let QNumber = Number(quantite);
-    // ajoute le prix du produit dans le tableau du prix 
+    // Ajoute le prix du produit dans le tableau du prix
     tabPrice.push({ price });
-    // ajoute la quantité du produit dans le tableau de le quantité
+    // Ajoute la quantité du produit dans le tableau de la quantité
     tabQuantite.push({ QNumber })
 
     console.log(tabPrice);
     console.log(tabQuantite);
-    // récupère les produits présent dans le tableau de prix un par un dans une variable 
+    // Récupère les produits présents dans le tableau du prix un par un dans une variable
     for (let key in tabPrice) {
         console.log(tabPrice[key].price)
-        // calcul le prix total et les enregistre dans leur variable 
+        // Calcule le prix total et l'enregistre dans sa variable
         totalP += (tabQuantite[key].QNumber * tabPrice[key].price);
-        // calcul la quantité total et les enregistre dans leur variable 
+        // Calcule la quantité totale et l'enregistre dans sa variable
         totalQ += tabQuantite[key].QNumber;
     }
     console.log(totalP);
     console.log(totalQ);
 
-    // ajoute la quantité total au DOM
+    // Ajoute la quantité totale au DOM
     quantityTotal.innerHTML = totalQ;
-    // ajoute le prix total au DOM
+    // Ajoute le prix total au DOM
     prixTotal.innerHTML = totalP;
 }
 
@@ -149,20 +149,20 @@ function total(price, quantite) {
 function supprimer() {
     let sup = document.querySelectorAll("#deleteItem");
     console.log(sup);
-    // récupère les balise ayant l'id deleteItem un par un 
+    // Récupère les balises ayant l'ID deleteItem un par un 
     for (let i = 0; i < sup.length; i++) {
-        // ajoute l'événement de type click au bouton supprimé de chaque produit présent dans le localStorage
+        // Ajoute l'événement de type click au bouton "supprimer" de chaque produit présent dans le localStorage
         sup[i].addEventListener("click", () => {
             console.log('sup');
-            // récupère l'id du produit cliqué  
+            // Récupère l'ID du produit cliqué  
             let _ID = sup[i].closest("article").dataset.id;
-            // récupère la couleur du produit cliqué 
+            // Récupère la couleur du produit cliqué 
             let _COLOR = sup[i].closest("article").dataset.color;
-            // filtre les produits qui n'ont pas l'id et la couleur identique a celui cliquer 
+            // Filtre les produits qui n'ont pas l'ID et la couleur identique a celui cliquer 
             cartItems = cartItems.filter(element => element.id !== _ID || element.color !== _COLOR);
-            // modifie objet present dans localStorage 
+            // Modification des objets présents dans le localStorage 
             localStorage.setItem("dataForCart", JSON.stringify(cartItems));
-            // recharge la page pour affiché les modifications 
+            // Rechargement de la page pour afficher les modifications 
             location.reload();
             console.log(cartItems);
         });
@@ -197,7 +197,6 @@ function modifieQ() {
             localStorage.setItem("dataForCart", JSON.stringify(cartItems));
             // Recharge la page pour affiché la quantité modifier
             location.reload();
-
         })
     }
 }
@@ -412,20 +411,20 @@ function validationOfOrder() {
                     // Requête l'API avec les informations de commande dans le corps de la requête 
                     fetch("http://localhost:3000/api/products//order", options)
 
-                        // Passe la réponse de l'api au format .json 
-                        .then((response) => response.json())
-                        .then((res) => {
-                            console.log(res.orderId);
-                            // Vide le panier 
-                            localStorage.clear('dataForCart');
-                            // Redirige l'utilisateur sur la page de confirmation
-                            document.location.href = 'confirmation.html?orderId=' + res.orderId;
+                    // Passe la réponse de l'api au format .json 
+                    .then((response) => response.json())
+                    .then((res) => {
+                        console.log(res.orderId);
+                        // Vide le panier 
+                        localStorage.clear('dataForCart');
+                        // Redirige l'utilisateur sur la page de confirmation
+                        document.location.href = 'confirmation.html?orderId=' + res.orderId;
 
-                        })
+                    })
 
-                        .catch((error) => {
-                            console.log("error :" + error)
-                        })
+                    .catch((error) => {
+                        console.log("Erreur :" + error)
+                    })
 
                 }
             }
