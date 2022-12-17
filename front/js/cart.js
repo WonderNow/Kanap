@@ -64,21 +64,22 @@ async function addCard() {
                         `<div class="cart__item__img">
                             <img src="${Img}" alt="${Altimg}">
                         </div>
-                        <div class="cart__item__content__description">
-                                    <h2>${Name}</h2>
-                                    <p>${colors}</p>
-                                    <p>${Price} €</p>
-                                </div>
+                        <div class="cart__item__content">
+                            <div class="cart__item__content__description">
+                                <h2>${Name}</h2>
+                                <p>${colors}</p>
+                                <p>${Price} €</p>
+                            </div>
                             <div class="cart__item__content__settings">
                                 <div class="cart__item__content__settings__quantity">
-                                    <p>Qté : </p>
-                                    <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${quantity}">
+                                <p>Qté : </p>
+                                <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${quantity}">
                                 </div>
                                 <div class="cart__item__content__settings__delete">
-                                    <p id="deleteItem" class="deleteItem">Supprimer</p>
+                                <p class="deleteItem">Supprimer</p>
                                 </div>
                             </div>
-                        </div> `;
+                        </div>`;
 
                     total(Price, quantity);
 
@@ -147,7 +148,7 @@ function total(price, quantite) {
 // Ajoute un événement de type click aux balises ayant l'id deleteItem 
 // Supprime l'élément ciblé di localStorage
 function supprimer() {
-    let sup = document.querySelectorAll("#deleteItem");
+    let sup = document.querySelectorAll(".deleteItem");
     console.log(sup);
     // Récupère les balises ayant l'ID deleteItem un par un 
     for (let i = 0; i < sup.length; i++) {
